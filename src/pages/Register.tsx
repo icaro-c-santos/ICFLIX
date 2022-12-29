@@ -1,21 +1,17 @@
-import { Box, Button, FilledInput, Modal, TextField } from "@mui/material";
+import { Box, Button, FilledInput, TextField } from "@mui/material";
 import { maxHeight } from "@mui/system";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useState } from "react";
 import { bancoFake, serviceAuthentic } from "../services/Authentic";
 import { Navigate, useNavigate } from "react-router";
-import ServerModal from "../Components/ModalError/ModalError";
-import AlertDialog from "../Components/ModalError/ModalError";
 
-export const Login = () => {
+export const Register = () => {
   const { userLogged, setUserLogged } = useContext(AuthContext);
   const [isValidLogin, setIsValidLogin] = useState(false);
   const [login, setLogin] = useState("");
   const [password, setPassowrd] = useState("");
   const [errorTextLogin, setErrorTextLogin] = useState("");
-  const [messageAlert, setMessageAlert] = useState("");
-  const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (login.length <= 0) {
@@ -35,27 +31,10 @@ export const Login = () => {
     return true;
   };
 
-  const handlerButtonLogin = async () => {
-    try {
-      if (login.length <= 0) {
-        throw new Error("DIGITE SEU LOGIN!");
-      }
-      if (password.length <= 0) {
-        throw new Error("DIGITE SUA SENHA!");
-      }
-      const user = await serviceAuthentic.autenticUser({
-        login: login,
-        passowrd: password,
-      });
+  const validPassowd = (value:string) =>{
+    
+  }
 
-      setUserLogged(user);
-      localStorage.setItem("userLogged", JSON.stringify(user));
-      navigate("/");
-    } catch (error) {
-      setOpenModal(true);
-      setMessageAlert(error.message);
-    }
-  };
 
   const handlerLogin = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -68,16 +47,10 @@ export const Login = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setPassowrd(event.target.value);
-    validLogin(login);
   };
 
   return (
     <>
-      <AlertDialog
-        message={messageAlert}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      />
       <Box
         sx={{
           display: "flex",
@@ -116,21 +89,12 @@ export const Login = () => {
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Button
-            onClick={() => {
-              navigate("/register");
-            }}
             variant="outlined"
-            sx={{ padding: "10px", borderRadius: "10px", width: "180px" }}
+            sx={{ padding: "10px", borderRadius: "10px" ,width:"100%"}}
           >
             Registrar
           </Button>
-          <Button
-            variant="outlined"
-            sx={{ padding: "10px", borderRadius: "10px", width: "180px" }}
-            onClick={handlerButtonLogin}
-          >
-            Entrar
-          </Button>
+        
         </Box>
       </Box>
     </>
