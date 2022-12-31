@@ -1,6 +1,7 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Typography } from "@mui/material";
 type TypeAlert = {
@@ -9,7 +10,7 @@ type TypeAlert = {
   setOpenModal: (value: boolean) => void;
 };
 
-export default function ModalError({
+export default function ModalSucess({
   message,
   openModal,
   setOpenModal,
@@ -26,13 +27,6 @@ export default function ModalError({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <Button
-          onClick={handleClose}
-          autoFocus
-          sx={{ position: "absolute", right: "0px", top: "8px" }}
-        >
-          <Typography sx={{ fontSize: "20px", color: "black" }}>X</Typography>
-        </Button>
         <DialogTitle
           id="alert-dialog-title"
           sx={{ padding: "60px 40px 40px 40px" }}
@@ -43,6 +37,14 @@ export default function ModalError({
             {message}
           </Typography>
         </DialogTitle>
+        <DialogActions>
+          {" "}
+          <Button onClick={handleClose} autoFocus sx={{ width: "100%" }}>
+            <Typography sx={{ fontSize: "20px", color: "black" }}>
+              OK
+            </Typography>
+          </Button>
+        </DialogActions>
       </Dialog>
     </div>
   );

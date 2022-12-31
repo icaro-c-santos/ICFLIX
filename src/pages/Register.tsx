@@ -8,6 +8,9 @@ import {
   validatorPassword,
 } from "../utils/validator";
 import { Fragment } from "react";
+import { registerUser } from "../services/User";
+import ModalSucess from "../Components/ModalSucess/ModalSucess";
+import ModalError from "../Components/ModalError/ModalError";
 
 export const Register = () => {
   const [login, setLogin] = useState("");
@@ -18,9 +21,16 @@ export const Register = () => {
   const [errorTextName, setErrorTextName] = useState<string[]>([]);
   const [errorTextPassword, setErrorTextPassword] = useState<string[]>([]);
   const [errorTextPasswordConfirm, setErrorTextPasswordConfirm] = useState("");
+  const [messageError, setMessageError] = useState("");
+  const [openModalError, setOpenModalError] = useState(false);
+  const [openModalSucess, setOpenModalSucess] = useState(false);
+  const [messageSucess, setMessageSucess] = useState("");
   const navigate = useNavigate();
 
-  const validName = (value: string) => {};
+  const closeModalSucess = (value: boolean) => {
+    setOpenModalSucess(value);
+    navigate("/login");
+  };
 
   const handlerLogin = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,7 +42,6 @@ export const Register = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setName(event.target.value);
-    validName(event.target.value);
   };
 
   const handlerPassword = (
@@ -51,54 +60,84 @@ export const Register = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect login")
-    const erros = validatorLogin(login);
+    console.log("useEffect login");
+    const errosLogin = validatorLogin(login);
     if (
       (login.length <= 0 &&
         name.length <= 0 &&
         password.length <= 0 &&
         passwordConfirm.length <= 0) ||
-      erros.length <= 0
+      errosLogin.length <= 0
     ) {
       setErrorTextLogin([]);
     } else {
-      setErrorTextLogin(erros);
+      setErrorTextLogin(errosLogin);
     }
-  }, [login, name, password, passwordConfirm]);
 
-  useEffect(() => {
-    console.log("useEffect name")
-    const erros = validatorName(name);
+    const errosName = validatorName(name);
     if (
       (name.length <= 0 &&
         password.length <= 0 &&
         passwordConfirm.length <= 0) ||
-      erros.length <= 0
+      errosName.length <= 0
     ) {
       setErrorTextName([]);
     } else {
-      setErrorTextName(erros);
+      setErrorTextName(errosName);
     }
-  }, [name, password, passwordConfirm]);
 
-  useEffect(() => {
-    console.log("useEffect passConfirm")
     if (passwordConfirm.length > 0 && password != passwordConfirm) {
       setErrorTextPasswordConfirm("AS SENHAS DEVEM SER IGUAIS");
     } else {
       setErrorTextPasswordConfirm("");
     }
 
-    const erros = validatorPassword(password);
-    if (password.length <= 0 || erros.length <= 0) {
+    const errosPassword = validatorPassword(password);
+    if (password.length <= 0 || errosPassword.length <= 0) {
       setErrorTextPassword([]);
     } else {
-      setErrorTextPassword(erros);
+      setErrorTextPassword(errosPassword);
     }
-  }, [password, passwordConfirm]);
+  }, [login, name, password, passwordConfirm]);
+
+  const handlerButtonRegister = async () => {
+    let erros: string[] = [];
+    erros = erros.concat(
+      validatorLogin(login),
+      validatorName(name),
+      validatorPassword(password)
+    );
+    if (erros.length <= 0 && password == passwordConfirm) {
+      try {
+        await registerUser({
+          login: login,
+          name: name,
+          password: password,
+        });
+        setMessageSucess("USUARIO CADASTRADO COM SUCESSO!");
+        setOpenModalSucess(true);
+      } catch (error) {
+        setMessageError(error.message);
+        setOpenModalError(true);
+      }
+    } else {
+      setMessageError("PREENCHA TODOS OS CAMPOS CORRETAMENTE!");
+      setOpenModalError(true);
+    }
+  };
 
   return (
     <>
+      <ModalSucess
+        message={messageSucess}
+        openModal={openModalSucess}
+        setOpenModal={closeModalSucess}
+      />
+      <ModalError
+        message={messageError}
+        openModal={openModalError}
+        setOpenModal={setOpenModalError}
+      />
       <Box
         sx={{
           display: "flex",
@@ -160,6 +199,7 @@ export const Register = () => {
           <Button
             variant="outlined"
             sx={{ padding: "10px", borderRadius: "10px", width: "100%" }}
+            onClick={handlerButtonRegister}
           >
             Registrar
           </Button>
