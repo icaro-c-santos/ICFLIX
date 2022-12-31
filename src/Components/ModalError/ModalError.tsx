@@ -2,8 +2,6 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Typography } from "@mui/material";
 type TypeAlert = {
@@ -34,11 +32,12 @@ export default function AlertDialog({
           autoFocus
           sx={{ position: "fixed", marginLeft: "340px" }}
         >
-         <Typography sx={{ fontSize: "20px",color:"black" }}>
-          X
-          </Typography>
+          <Typography sx={{ fontSize: "20px", color: "black" }}>X</Typography>
         </Button>
-        <DialogTitle id="alert-dialog-title" sx={{ padding: "60px 40px 40px 40px" }}>
+        <DialogTitle
+          id="alert-dialog-title"
+          sx={{ padding: "60px 40px 40px 40px" }}
+        >
           <Typography sx={{ fontSize: "22px", fontWeight: "500" }}>
             {message}
           </Typography>

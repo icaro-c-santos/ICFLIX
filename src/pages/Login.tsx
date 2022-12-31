@@ -1,11 +1,9 @@
-import { Box, Button, FilledInput, Modal, TextField } from "@mui/material";
-import { maxHeight } from "@mui/system";
+import { Box, Button, TextField } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useState } from "react";
-import { bancoFake, serviceAuthentic } from "../services/Authentic";
-import { Navigate, useNavigate } from "react-router";
-import ServerModal from "../Components/ModalError/ModalError";
+import { serviceAuthentic } from "../services/Authentic";
+import { useNavigate } from "react-router";
 import AlertDialog from "../Components/ModalError/ModalError";
 
 export const Login = () => {
