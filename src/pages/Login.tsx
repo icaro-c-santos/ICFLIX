@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useState } from "react";
-import { serviceAuthentic } from "../services/Authentic";
+import { serviceAuthentic } from "../services/User";
 import { useNavigate } from "react-router";
 import AlertDialog from "../Components/ModalError/ModalError";
 
@@ -43,7 +43,7 @@ export const Login = () => {
       }
       const user = await serviceAuthentic.autenticUser({
         login: login,
-        passowrd: password,
+        password: password,
       });
 
       setUserLogged(user);

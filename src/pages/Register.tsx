@@ -8,7 +8,7 @@ import {
   validatorPassword,
 } from "../utils/validator";
 import { Fragment } from "react";
-import { registerUser } from "../services/User";
+import { bancoFake, serviceAuthentic } from "../services/User";
 import ModalSucess from "../Components/ModalSucess/ModalSucess";
 import ModalError from "../Components/ModalError/ModalError";
 
@@ -109,7 +109,8 @@ export const Register = () => {
     );
     if (erros.length <= 0 && password == passwordConfirm) {
       try {
-        await registerUser({
+        console.log("a",bancoFake)
+        await serviceAuthentic.registerUser({
           login: login,
           name: name,
           password: password,

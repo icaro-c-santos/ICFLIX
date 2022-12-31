@@ -1,8 +1,8 @@
 export interface user {
     login: string;
     name: string;
-    passowrd: string;
-    avatarUrl: string;
+    password: string;
+    avatarUrl?: string;
   }
   
 export type userView = Omit<user, "passowrd">;
