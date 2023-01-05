@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/icaro-c-santos/ICFLIX/static/css/main.073c9b0a.css",
-    "main.js": "/icaro-c-santos/ICFLIX/static/js/main.7bf1471e.js",
-    "static/js/787.28cb0dcd.chunk.js": "/icaro-c-santos/ICFLIX/static/js/787.28cb0dcd.chunk.js",
-    "index.html": "/icaro-c-santos/ICFLIX/index.html",
-    "main.073c9b0a.css.map": "/icaro-c-santos/ICFLIX/static/css/main.073c9b0a.css.map",
-    "main.7bf1471e.js.map": "/icaro-c-santos/ICFLIX/static/js/main.7bf1471e.js.map",
-    "787.28cb0dcd.chunk.js.map": "/icaro-c-santos/ICFLIX/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/ICFLIX/static/css/main.073c9b0a.css",
+    "main.js": "/ICFLIX/static/js/main.8253f8fc.js",
+    "static/js/787.28cb0dcd.chunk.js": "/ICFLIX/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/ICFLIX/index.html",
+    "main.073c9b0a.css.map": "/ICFLIX/static/css/main.073c9b0a.css.map",
+    "main.8253f8fc.js.map": "/ICFLIX/static/js/main.8253f8fc.js.map",
+    "787.28cb0dcd.chunk.js.map": "/ICFLIX/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.7bf1471e.js"
+    "static/js/main.8253f8fc.js"
   ]
 }
