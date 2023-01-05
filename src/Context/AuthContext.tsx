@@ -13,10 +13,16 @@ export const AuthProvider = (props: { children: any }) => {
   const [userLogged, setUserLogged] = useState<userView | {}>({});
 
   useEffect(() => {
+    console.log("entrou!");
     const user = localStorage.getItem("userLogged");
 
     if (user) {
       setUserLogged(JSON.parse(user));
+    }
+
+
+    return ()=>{
+      console.log("saiu");
     }
   }, []);
 

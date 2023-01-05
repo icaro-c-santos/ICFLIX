@@ -15,6 +15,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { Link } from "react-router-dom";
+import { ModalConfirm } from "../ModalConfirm/ModalConfirm";
+import { serviceAuthentic } from "../../services/User";
 
 const pages = [
   { name: "About", link: "about" },
@@ -22,16 +24,50 @@ const pages = [
   { name: "Contact", link: "contact" },
 ];
 
-export const ResponsiveAppBar = () => {
-  const { userLogged } = React.useContext(AuthContext);
+const DICIONARY = {
+  modalConfirm: "Você tem certeza que deseja sair?",
+};
 
-  const settings = userLogged
-    ? [
-        { name: "Profile", path: "profile" },
-        { name: "Account", path: "Account" },
-        { name: "Logout", path: "Logout" },
-      ]
-    : [{ name: "Login", path: "Login" }];
+export const ResponsiveAppBar = () => {
+  const { userLogged,setUserLogged } = React.useContext(AuthContext);
+  const [openModalConfirm, setOpenModalConfirm] = React.useState(false);
+  const navigate = useNavigate();
+
+  const settings =
+    userLogged.name != null
+      ? [
+          {
+            name: "Profile",
+            path: "profile",
+            handler: () => {
+              handleCloseNavMenu();
+            },
+          },
+          {
+            name: "Account",
+            path: "Account",
+            handler: () => {
+              handleCloseNavMenu();
+            },
+          },
+          {
+            name: "Logout",
+            path: "#",
+            handler: () => {
+              setOpenModalConfirm(true);
+              handleCloseNavMenu();
+            },
+          },
+        ]
+      : [
+          {
+            name: "Login",
+            path: "Login",
+            handler: () => {
+              handleCloseNavMenu();
+            },
+          },
+        ];
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -39,6 +75,12 @@ export const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
+  const logout = () => {
+    serviceAuthentic.logoutUser();
+    setOpenModalConfirm(false);
+    navigate("/");
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -55,8 +97,6 @@ export const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
-  const navigate = useNavigate();
-
   let srcAvatar = "";
 
   if (userLogged.avatarUrl) {
@@ -64,7 +104,15 @@ export const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static"  sx={{ bgcolor: "black"}}>
+    <AppBar position="static" sx={{ bgcolor: "black" }}>
+      {
+        <ModalConfirm
+          openModal={openModalConfirm}
+          message={DICIONARY.modalConfirm}
+          setOpenModal={setOpenModalConfirm}
+          setAccept={logout}
+        />
+      }
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -187,7 +235,7 @@ export const ResponsiveAppBar = () => {
                   style={{ textDecoration: "none", color: "black" }}
                   to={settings[index].path}
                 >
-                  <MenuItem key={index} onClick={handleCloseUserMenu}>
+                  <MenuItem key={index} onClick={settings[index].handler}>
                     <Typography textAlign="center">{setting.name}</Typography>
                   </MenuItem>
                 </Link>

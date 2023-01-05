@@ -23,9 +23,16 @@ const autenticUser = async (
   return user;
 };
 
+
+const logoutUser = () => {
+  localStorage.removeItem("userLogged");
+  /// chamar endpoint de destruir token
+};
+
+
 const registerUser = async (userDates: user): Promise<userView> => {
   const user = bancoFake.find((user) => user.login == userDates.login);
-  if (user!=null) {
+  if (user != null) {
     throw new Error("USUARIO JÁ EXISTENTE!");
   } else {
     bancoFake.push({
@@ -45,4 +52,5 @@ const registerUser = async (userDates: user): Promise<userView> => {
 export const serviceAuthentic = {
   registerUser,
   autenticUser,
+  logoutUser,
 };
