@@ -6,7 +6,12 @@ import {useEffect} from "react"
 export const Home = () => {
 
   useEffect(()=>{
-    console.log("renderizou! 1")
+    console.log("renderizou! 2")
+
+
+    return ()=>{
+      console.log("saiu")
+    }
   },[])
   
   return (
