@@ -6,7 +6,7 @@ import {useEffect} from "react"
 export const Home = () => {
 
   useEffect(()=>{
-    console.log("renderizou! 2")
+    console.log("renderizou! 3")
 
 
     return ()=>{
