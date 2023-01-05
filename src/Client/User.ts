@@ -1,6 +1,15 @@
-import { user, userView } from "../types/index";
+import { type } from "os";
+import { TAuthData } from "../Context/AuthContext";
 
-export const bancoFake: user[] = [];
+interface typeUserData extends TAuthData {
+  password?: string;
+}
+
+interface user{
+  login:string,
+  password:string
+}
+export const bancoFake: typeUserData[] = [];
 
 bancoFake.push({
   login: "icaro",
@@ -9,28 +18,28 @@ bancoFake.push({
   avatarUrl:
     "https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375__340.png",
 });
-const autenticUser = async (
-  userDates: Omit<user, "avatarUrl" | "name">
-): Promise<userView> => {
+
+
+const loginUser = async (userDates:user): Promise<typeUserData> => {
   const user = bancoFake.find(
     (user) =>
       user.login == userDates.login && user.password == userDates.password
-  ) as userView;
+  ) as typeUserData;
   if (!user) {
     throw new Error("USUARIO NÃO ENCONTRADO!");
   }
-
   return user;
 };
 
-
-const logoutUser = () => {
-  localStorage.removeItem("userLogged");
+const logoutUser = async () => {
   /// chamar endpoint de destruir token
 };
 
+const autenticUser = async () =>{
+  return null
+}
 
-const registerUser = async (userDates: user): Promise<userView> => {
+const registerUser = async (userDates: {login:string,password:string,name:string}): Promise<typeUserData> => {
   const user = bancoFake.find((user) => user.login == userDates.login);
   if (user != null) {
     throw new Error("USUARIO JÁ EXISTENTE!");
@@ -39,18 +48,17 @@ const registerUser = async (userDates: user): Promise<userView> => {
       login: userDates.login,
       name: userDates.name,
       password: userDates.password,
-      avatarUrl: userDates.avatarUrl,
     });
   }
-  const newUser = autenticUser({
-    login: userDates.login,
-    password: userDates.password,
-  });
+  const newUser = bancoFake.find(
+    (user) =>
+      user.login == userDates.login && user.password == userDates.password
+  ) as typeUserData;
   return newUser;
 };
 
-export const serviceAuthentic = {
+export const clientAuth = {
   registerUser,
-  autenticUser,
+  loginUser,
   logoutUser,
 };

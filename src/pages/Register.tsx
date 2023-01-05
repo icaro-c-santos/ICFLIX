@@ -8,7 +8,7 @@ import {
   validatorPassword,
 } from "../utils/validator";
 import { Fragment } from "react";
-import { bancoFake, serviceAuthentic } from "../services/User";
+import { bancoFake, clientAuth } from "../Client/User";
 import ModalSucess from "../Components/ModalSucess/ModalSucess";
 import ModalError from "../Components/ModalError/ModalError";
 
@@ -60,7 +60,7 @@ export const Register = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect login");
+
     const errosLogin = validatorLogin(login);
     if (
       (login.length <= 0 &&
@@ -109,8 +109,8 @@ export const Register = () => {
     );
     if (erros.length <= 0 && password == passwordConfirm) {
       try {
-        console.log("a",bancoFake)
-        await serviceAuthentic.registerUser({
+
+        await clientAuth.registerUser({
           login: login,
           name: name,
           password: password,

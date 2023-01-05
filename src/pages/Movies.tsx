@@ -1,11 +1,10 @@
 import { Link, useParams } from "react-router-dom";
+import react from "react";
 
 export const Movies = () => {
-  const { name } = useParams();
   return (
     <>
-      <h1>MOVIES {name}</h1>
-      <Link to="/">retornar a página inicial</Link>
+      <h1>MOVIES</h1>
     </>
   );
 };

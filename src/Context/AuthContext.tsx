@@ -1,33 +1,36 @@
 import { createContext, useEffect, useState } from "react";
-import { userView } from "../types";
 
-interface IAuthContext {
-  userLogged: userView;
-  setUserLogged: (userLogged: userView) => void;
-  
-}
+export type TAuthData = {
+  login?: string;
+  token?: string;
+  refreshToken?: string;
+  name?: string;
+  avatarUrl?: string;
+  isLoggedIn?: boolean;
+};
 
-export const AuthContext = createContext({} as IAuthContext);
+export type TAuthContext = {
+  userLogged: TAuthData;
+  setUserLogged: (userLogged: TAuthData) => void;
+};
+
+export const AuthContext = createContext<TAuthContext>({} as TAuthContext);
 
 export const AuthProvider = (props: { children: any }) => {
-  const [userLogged, setUserLogged] = useState<userView | {}>({});
+  const [userLogged, setUserLogged] = useState<TAuthData>({});
 
   useEffect(() => {
-    console.log("entrou!");
-    const user = localStorage.getItem("userLogged");
-
-    if (user) {
-      setUserLogged(JSON.parse(user));
-    }
-
-
-    return ()=>{
-      console.log("saiu");
+    const data = localStorage.getItem("userLogged");
+    if (data) {
+      const user: TAuthData = JSON.parse(data);
+      user.isLoggedIn && setUserLogged(user);
+    } else {
+      setUserLogged({});
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{userLogged,setUserLogged} as IAuthContext}>
+    <AuthContext.Provider value={{ userLogged, setUserLogged } as TAuthContext}>
       {props.children}
     </AuthContext.Provider>
   );

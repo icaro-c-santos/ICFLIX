@@ -11,12 +11,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { Link } from "react-router-dom";
 import { ModalConfirm } from "../ModalConfirm/ModalConfirm";
-import { serviceAuthentic } from "../../services/User";
+import { clientAuth } from "../../Client/User";
 
 const pages = [
   { name: "About", link: "about" },
@@ -28,13 +27,21 @@ const DICIONARY = {
   modalConfirm: "Você tem certeza que deseja sair?",
 };
 
+type setting = {
+  name: string;
+  path: string;
+  handler: () => void;
+};
+
 export const ResponsiveAppBar = () => {
-  const { userLogged,setUserLogged } = React.useContext(AuthContext);
+  const { userLogged, setUserLogged } = React.useContext(AuthContext);
   const [openModalConfirm, setOpenModalConfirm] = React.useState(false);
   const navigate = useNavigate();
+  const [settings, setSettings] = React.useState<setting[]>([]);
 
-  const settings =
-    userLogged.name != null
+  React.useEffect(() => {
+    console.log("chamou!");
+    const setting = userLogged.isLoggedIn
       ? [
           {
             name: "Profile",
@@ -69,6 +76,9 @@ export const ResponsiveAppBar = () => {
           },
         ];
 
+    setSettings(setting);
+  }, [userLogged]);
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -76,8 +86,10 @@ export const ResponsiveAppBar = () => {
     null
   );
 
-  const logout = () => {
-    serviceAuthentic.logoutUser();
+  const logout = async () => {
+    await clientAuth.logoutUser();
+    localStorage.removeItem("userLogged");
+    setUserLogged({isLoggedIn:false});
     setOpenModalConfirm(false);
     navigate("/");
   };
@@ -97,11 +109,6 @@ export const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
-  let srcAvatar = "";
-
-  if (userLogged.avatarUrl) {
-    srcAvatar = userLogged.avatarUrl;
-  }
 
   return (
     <AppBar position="static" sx={{ bgcolor: "black" }}>
@@ -210,7 +217,7 @@ export const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="avatar" src={srcAvatar} />
+                <Avatar alt="avatar" src={userLogged.avatarUrl} />
               </IconButton>
             </Tooltip>
             <Menu

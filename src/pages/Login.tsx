@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useState } from "react";
-import { serviceAuthentic } from "../services/User";
+import { clientAuth } from "../Client/User";
 import { useNavigate } from "react-router";
 import AlertDialog from "../Components/ModalError/ModalError";
 
@@ -15,11 +15,13 @@ export const Login = () => {
   const [messageAlert, setMessageAlert] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (login.length <= 0) {
-      setIsValidLogin(true);
-    }
+    login.length <= 0 && setIsValidLogin(true);
   }, []);
+
+
+  userLogged.isLoggedIn && navigate("/");
 
   const validLogin = (value: string) => {
     if (value.length <= 0) {
@@ -41,11 +43,11 @@ export const Login = () => {
       if (password.length <= 0) {
         throw new Error("DIGITE SUA SENHA!");
       }
-      const user = await serviceAuthentic.autenticUser({
+      const user = await clientAuth.loginUser({
         login: login,
         password: password,
       });
-
+      user.isLoggedIn = true;
       setUserLogged(user);
       localStorage.setItem("userLogged", JSON.stringify(user));
       navigate("/");
