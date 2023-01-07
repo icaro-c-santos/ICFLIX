@@ -6,11 +6,11 @@ import {
   validatorLogin,
   validatorName,
   validatorPassword,
-} from "../utils/validator";
+} from "../../utils/validator";
 import { Fragment } from "react";
-import { bancoFake, clientAuth } from "../Client/User";
-import ModalSucess from "../Components/ModalSucess/ModalSucess";
-import ModalError from "../Components/ModalError/ModalError";
+import { bancoFake, clientAuth } from "../../Client/User";
+import ModalSucess from "../../Components/ModalSucess/ModalSucess";
+import ModalError from "../../Components/ModalError/ModalError";
 
 export const Register = () => {
   const [login, setLogin] = useState("");
