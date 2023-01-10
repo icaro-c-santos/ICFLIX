@@ -5,6 +5,7 @@ import {
   clearMockAuthenticUser,
   mockAuthenticUser,
 } from "../../tests/mocks/localStorageMock";
+
 import { Login } from "./Login";
 import renderer from "react-test-renderer";
 import userEvent from "@testing-library/user-event";
@@ -16,19 +17,6 @@ jest.mock("react-router", () => ({
   ...jest.requireActual("react-router"),
   useNavigate: () => mockNavigate,
 }));
-
-const WaitrenderLoginAct = async (execute: () => void) => {
-  const container = document.createElement("div");
-  document.body.appendChild(container);
-  await act(() => {
-    createRoot(container).render(
-      <AuthProvider>
-        <Login></Login>
-      </AuthProvider>
-    );
-  });
-  await waitFor(execute);
-};
 
 const renderLogin = () => {
   render(
@@ -47,7 +35,7 @@ describe("<Login>", () => {
     clearMockAuthenticUser();
   });
 
-  it("should call navigate to home if logged", () => {
+  it("should not call navigate to home if logged", () => {
     clearMockAuthenticUser();
     renderLogin();
     expect(mockNavigate).not.toHaveBeenCalled();
@@ -69,36 +57,42 @@ describe("<Login>", () => {
     ).toBeInTheDocument();
   });
 
-  it("should render erro (digite seu login) when click button login with field login empty", async () => {
-    await WaitrenderLoginAct(() => {
-      screen
-        .getByRole("button", {
-          name: /Entrar/i,
-        })
-        .dispatchEvent(new MouseEvent("click", { bubbles: true }));
-    });
-    expect(
-      screen.getByRole("dialog", { name: /digite seu login!/i })
-    ).toBeInTheDocument();
 
-    cleanup();
-    jest.resetAllMocks();
-   
+  it("should render erro ( USUÁRIO NÃO ENCONTRADO ) when click button login with invalid fields", async () => {
+    await act(async () => {
+     const {baseElement} = render(
+        <AuthProvider>
+          <Login></Login>
+        </AuthProvider>
+      );
+    });
+    await waitFor( () => {
+      userEvent.click(screen.getByRole("button", { name: /entrar/i }));
+    });
+    await waitFor(()=>{
+      expect(screen.getByRole('dialog', { name: /DIGITE SEU LOGIN!/i })).toBeInTheDocument();
+    })
+    screen.logTestingPlaygroundURL();
   });
 
-  it("should render erro (digite seu login) when click button login with field login empty", async () => {
-    await WaitrenderLoginAct(() => {
-      screen
-        .getByRole("button", {
-          name: /Entrar/i,
-        })
-        .dispatchEvent(new MouseEvent("click", { bubbles: true }));
+
+  it("should render erro ( USUÁRIO NÃO ENCONTRADO ) when click button login with invalid fields", async () => {
+    await act(async () => {
+     const {baseElement} = render(
+        <AuthProvider>
+          <Login></Login>
+        </AuthProvider>
+      );
     });
-    expect(
-      screen.getByRole("dialog", { name: /digite seu login!/i })
-    ).toBeInTheDocument();
+    await waitFor( () => {
+      userEvent.type(screen.getByPlaceholderText(/senha/i), "icaro");
+      userEvent.type(screen.getByPlaceholderText(/Login/i), "12345");
+      userEvent.click(screen.getByRole("button", { name: /entrar/i }));
+    });
+    await waitFor(()=>{
+      expect(screen.getByRole('dialog', { name: /USUARIO NÃO ENCONTRADO!/i })).toBeInTheDocument();
+    })
     screen.logTestingPlaygroundURL();
-    cleanup();
   });
 
   it("Matches DOM Snapshot", () => {
@@ -112,4 +106,3 @@ describe("<Login>", () => {
     expect(domTree).toMatchSnapshot();
   });
 });
-
