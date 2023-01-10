@@ -20,7 +20,6 @@ export const Login = () => {
     login.length <= 0 && setIsValidLogin(true);
   }, []);
 
-
   userLogged.isLoggedIn && navigate("/");
 
   const validLogin = (value: string) => {
@@ -36,6 +35,7 @@ export const Login = () => {
   };
 
   const handlerButtonLogin = async () => {
+   
     try {
       if (login.length <= 0) {
         throw new Error("DIGITE SEU LOGIN!");
@@ -136,3 +136,6 @@ export const Login = () => {
     </>
   );
 };
+
+
+
