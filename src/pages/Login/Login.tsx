@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { useState } from "react";
-import { clientAuth } from "../../Client/User";
+import clientAuth from "../../Client/User";
 import { useNavigate } from "react-router";
 import AlertDialog from "../../Components/ModalError/ModalError";
 
@@ -35,7 +35,6 @@ export const Login = () => {
   };
 
   const handlerButtonLogin = async () => {
-   
     try {
       if (login.length <= 0) {
         throw new Error("DIGITE SEU LOGIN!");
@@ -136,6 +135,3 @@ export const Login = () => {
     </>
   );
 };
-
-
-

@@ -8,7 +8,7 @@ import {
   validatorPassword,
 } from "../../utils/validator";
 import { Fragment } from "react";
-import { bancoFake, clientAuth } from "../../Client/User";
+import clientAuth, { bancoFake,  } from "../../Client/User";
 import ModalSucess from "../../Components/ModalSucess/ModalSucess";
 import ModalError from "../../Components/ModalError/ModalError";
 
@@ -60,7 +60,6 @@ export const Register = () => {
   };
 
   useEffect(() => {
-
     const errosLogin = validatorLogin(login);
     if (
       (login.length <= 0 &&
@@ -109,15 +108,16 @@ export const Register = () => {
     );
     if (erros.length <= 0 && password == passwordConfirm) {
       try {
-
-        await clientAuth.registerUser({
+         await clientAuth.registerUser({
           login: login,
           name: name,
           password: password,
         });
+      
         setMessageSucess("USUARIO CADASTRADO COM SUCESSO!");
         setOpenModalSucess(true);
       } catch (error) {
+  
         setMessageError(error.message);
         setOpenModalError(true);
       }
@@ -178,9 +178,11 @@ export const Register = () => {
             helperText={errorTextName}
           ></TextField>
           <TextField
+            data-testid="input-password"
             placeholder="Senha"
             onChange={handlerPassword}
             value={password}
+            datatype={"password"}
             type={"password"}
             error={errorTextPassword.length > 0}
             helperText={errorTextPassword.map((error) => (
