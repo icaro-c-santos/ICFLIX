@@ -24,9 +24,7 @@ export const AuthProvider = (props: { children: any }) => {
     if (data) {
       const user: TAuthData = JSON.parse(data);
       user.isLoggedIn && setUserLogged(user);
-    } else {
-      setUserLogged({});
-    }
+    } 
   }, []);
 
   return (

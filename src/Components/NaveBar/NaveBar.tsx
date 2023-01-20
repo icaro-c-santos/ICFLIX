@@ -15,7 +15,7 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { Link } from "react-router-dom";
 import { ModalConfirm } from "../ModalConfirm/ModalConfirm";
-import { clientAuth } from "../../Client/User";
+import clientAuth from "../../Client/User";
 
 const pages = [
   { name: "About", link: "about" },
@@ -89,7 +89,7 @@ export const ResponsiveAppBar = () => {
   const logout = async () => {
     await clientAuth.logoutUser();
     localStorage.removeItem("userLogged");
-    setUserLogged({isLoggedIn:false});
+    setUserLogged({ isLoggedIn: false });
     setOpenModalConfirm(false);
     navigate("/");
   };
@@ -108,7 +108,6 @@ export const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
 
   return (
     <AppBar position="static" sx={{ bgcolor: "black" }}>

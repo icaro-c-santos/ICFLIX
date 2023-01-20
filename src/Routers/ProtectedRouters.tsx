@@ -1,11 +1,19 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
-export const ProtectedRouter = ({children}: { children: React.ReactNode }) => {
+export const ProtectedRouter = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { userLogged } = useContext(AuthContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userLogged.isLoggedIn != true) {
+      navigate("/login");
+    }
+  }, []);
 
-  return (
-    <>{userLogged.isLoggedIn ?<>{children}</> : <Navigate to={"/login"} />}</>
-  );
+  return <>{children}</>;
 };
