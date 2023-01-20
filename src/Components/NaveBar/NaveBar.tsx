@@ -40,7 +40,7 @@ export const ResponsiveAppBar = () => {
   const [settings, setSettings] = React.useState<setting[]>([]);
 
   React.useEffect(() => {
-    console.log("chamou!");
+
     const setting = userLogged.isLoggedIn
       ? [
           {
