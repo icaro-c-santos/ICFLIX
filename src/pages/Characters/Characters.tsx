@@ -1,10 +1,10 @@
-import { Link, useParams } from "react-router-dom";
 import react from "react";
 import { Box, MenuItem, TextField } from "@mui/material";
-import { fetchListMovies } from "../../Client/MovieDb";
+import { fetchListMovies } from "../../Client/ApiRickAndMorty";
 import { useQuery } from "react-query";
-import { useContext, useEffect } from "react";
-export const Movies = () => {
+import CardView from "../../Components/CardView/CardView";
+
+export const Characters = () => {
   const options = ["Nome", "Genêro"];
   const { data, status, isError, isLoading } = useQuery(
     "movie",
@@ -32,14 +32,26 @@ export const Movies = () => {
       </Box>
 
       {status == "success" && (
-        <div>
-          {data.results.map((movie: any) => (
-            <p key={movie.original_title}>{movie.original_title}</p>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-around",
+            gap: "60px",
+            padding: "30px",
+          }}
+        >
+          {data.results.map((person: any) => (
+            <CardView
+              status={person.status}
+              image={person.image}
+              name={person.name}
+              key={Math.random()}
+            />
           ))}
-        </div>
+        </Box>
       )}
-
-      <h1>MOVIES</h1>
     </>
   );
 };

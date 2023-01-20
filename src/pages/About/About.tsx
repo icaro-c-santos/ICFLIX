@@ -23,8 +23,8 @@ export const About = () => {
           <span>
             O intutito desse site é apenas o front-end da aplicação, foi criado
             um back-end fake para servir alguns dados de autenticação para a
-            aplicação e para servir os dados dos filmes foi utilizado a api do
-            themoviedb "https://www.themoviedb.org/documentation/api".
+            aplicação e para servir os dados  foi utilizado a api do
+            rick and morty "https://rickandmortyapi.com/documentation/".
           </span>
         </Typography>
       </Container>

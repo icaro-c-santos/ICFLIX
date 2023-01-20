@@ -19,7 +19,7 @@ import clientAuth from "../../Client/User";
 
 const pages = [
   { name: "About", link: "about" },
-  { name: "Movies", link: "movies" },
+  { name: "Characters", link: "characters" },
   { name: "Contact", link: "contact" },
 ];
 
