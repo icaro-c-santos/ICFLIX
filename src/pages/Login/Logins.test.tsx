@@ -123,7 +123,7 @@ describe("<Login>", () => {
   });
 
   it("Matches DOM Snapshot", () => {
-    const domTree = renderer
+    const domTree = renderer 
       .create(
         <AuthProvider>
           <Login></Login>

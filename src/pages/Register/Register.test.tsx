@@ -5,7 +5,7 @@ import { act } from "react-dom/test-utils";
 import { waitFor } from "@testing-library/react";
 import { Register } from "./Register";
 import clientAuth from "../../Client/User";
-
+import renderer from "react-test-renderer";
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
   ...jest.requireActual("react-router"),
@@ -162,7 +162,17 @@ describe("<Register>", () => {
       expect(
         screen.getByRole("dialog", { name: /USUARIO CADASTRADO COM SUCESSO!/i })
       ).toBeInTheDocument();
-      screen.logTestingPlaygroundURL();
     });
+  });
+
+  it("Matches DOM Snapshot", () => {
+    const domTree = renderer
+      .create(
+        <AuthProvider>
+          <Register />
+        </AuthProvider>
+      )
+      .toJSON();
+    expect(domTree).toMatchSnapshot();
   });
 });
