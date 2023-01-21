@@ -6,6 +6,6 @@ const axiosInstance = axios.create({
 
 export const fetchListMovies = async () => {
   const { data } = await axiosInstance.get("/character");
- 
+
   return data;
 };

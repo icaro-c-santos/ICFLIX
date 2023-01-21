@@ -13,6 +13,9 @@ export type TCardViewProps = {
   image: string;
   name: string;
   status: "Dead" | "Alive" | "unknown";
+  gender: string;
+  species: string;
+  location: string;
 };
 
 const statusColor = {
@@ -28,6 +31,7 @@ const themeCardClosed = {
   borderRadius: "10px",
   transitionProperty: "scale",
   transitionDuration: "500ms",
+  textAlign: "center",
   "&:hover": {
     cursor: "pointer",
     scale: "1.2",
@@ -37,11 +41,15 @@ const themeCardClosed = {
 };
 
 const themeCardOpen = {
-  position: "absolute",
-  width: 600,
-  padding: 2,
+  position: "fixed",
+  top:"20px",
+  width: 400,
+  padding: "20px 20px 0px 20px",
+  textAlign: "center",
+  cursor:"pointer",
   border: "solid",
   borderRadius: "10px",
+  zIndex: 1000,
 };
 
 export default function CardView(cardProps: TCardViewProps) {
@@ -89,10 +97,9 @@ export default function CardView(cardProps: TCardViewProps) {
             <ul
               style={{ listStyleType: "none", fontSize: "24px", lineHeight: 2 }}
             >
-              <li>Especie: {""}</li>
-              <li>Gênero: {""}</li>
-              <li>Origem: {""}</li>
-              <li>Tipo: {""}</li>
+              {cardProps.species && <li>Especie: {cardProps.species}</li>}
+              {cardProps.gender && <li>Gênero: {cardProps.gender}</li>}
+              {cardProps.location && <li>Origem: {cardProps.location}</li>}
             </ul>
           </CardContent>
         )}

@@ -11,8 +11,6 @@ export const Characters = () => {
     fetchListMovies
   );
 
-
-
   return (
     <>
       <Box>
@@ -49,7 +47,10 @@ export const Characters = () => {
               status={person.status}
               image={person.image}
               name={person.name}
-              key={Math.random()}
+              key={person.id}
+              gender={person.gender}
+              location={person.location.name}
+              species={person.species}
             />
           ))}
         </Box>
