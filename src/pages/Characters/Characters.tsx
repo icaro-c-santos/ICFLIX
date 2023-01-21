@@ -11,6 +11,8 @@ export const Characters = () => {
     fetchListMovies
   );
 
+
+
   return (
     <>
       <Box>
