@@ -1,27 +1,86 @@
-import react from "react";
+import react, { useState } from "react";
 import { Box, MenuItem, TextField } from "@mui/material";
 import { fetchListMovies } from "../../Client/ApiRickAndMorty";
 import { useQuery } from "react-query";
 import CardView from "../../Components/CardView/CardView";
 
+type TypeOptionsSelected = {
+  title: string;
+  options: string[];
+};
+
 export const Characters = () => {
-  const options = ["Nome", "Genêro"];
   const { data, status, isError, isLoading } = useQuery(
     "movie",
     fetchListMovies
   );
 
+  const options = ["Nome", "Gênero", "Status"];
+
+  const listOptions = {
+    optionStatus: {
+      title: "Status",
+      options: ["alive", "unknown", "Dead"],
+    },
+    optionsGender: {
+      title: "Gênero",
+      options: ["Male", "Female", "unknown"],
+    },
+  };
+  const [selectedValue, setSelctedValue] = useState("Nome");
+  const [optionsSearch, setOptionSearch] =
+    useState<TypeOptionsSelected | null>();
+
+  const [selectValueSearch, setSelectValueSearch] = useState("");
+
+  const handlerOptionSelected = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSelctedValue(event.target.value as string);
+    event.target.value == "Status" &&
+      setOptionSearch(listOptions["optionStatus"]);
+
+    event.target.value == "Gênero" &&
+      setOptionSearch(listOptions["optionsGender"]);
+
+    event.target.value == "Nome" && setOptionSearch(null);
+  };
+
+  const handlerOptionSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectValueSearch(event.target.value);
+  };
+
+  console.log("al");
+
   return (
     <>
       <Box>
-        <TextField size={"small"} placeholder={"Nome"}></TextField>
+        {selectedValue == "Nome" && (
+          <TextField size={"small"} placeholder={"Nome"}></TextField>
+        )}
+        {optionsSearch && (
+          <TextField
+            select
+            size={"small"}
+            sx={{ width: "200px" }}
+            label={optionsSearch?.title}
+            value={selectValueSearch}
+            onChange={handlerOptionSearch}
+          >
+            {optionsSearch?.options.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+        )}
         <TextField
           select
           size={"small"}
           sx={{ width: "200px" }}
-          label={"Ordenar Por"}
-          placeholder={"Nome"}
-          defaultValue="Nome"
+          label={"Buscar Por"}
+          value={selectedValue}
+          onChange={handlerOptionSelected}
         >
           {options.map((option) => (
             <MenuItem key={option} value={option}>
