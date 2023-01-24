@@ -1,8 +1,9 @@
 import react, { useState } from "react";
-import { Box, MenuItem, TextField } from "@mui/material";
+import { Box, Container, MenuItem, TextField } from "@mui/material";
 import { fetchListMovies } from "../../Client/ApiRickAndMorty";
 import { useQuery } from "react-query";
 import CardView from "../../Components/CardView/CardView";
+import { width } from "@mui/system";
 
 type TypeOptionsSelected = {
   title: string;
@@ -50,11 +51,9 @@ export const Characters = () => {
     setSelectValueSearch(event.target.value);
   };
 
-  console.log("al");
-
   return (
-    <>
-      <Box>
+    <Box sx={{marginTop:"40px"}}>
+      <Box sx={{display:"flex", justifyContent:"center", gap:"20px"}}>
         {selectedValue == "Nome" && (
           <TextField size={"small"} placeholder={"Nome"}></TextField>
         )}
@@ -90,30 +89,32 @@ export const Characters = () => {
         </TextField>
       </Box>
 
-      {status == "success" && (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
-            gap: "60px",
-            padding: "30px",
-          }}
-        >
-          {data.results.map((person: any) => (
-            <CardView
-              status={person.status}
-              image={person.image}
-              name={person.name}
-              key={person.id}
-              gender={person.gender}
-              location={person.location.name}
-              species={person.species}
-            />
-          ))}
-        </Box>
-      )}
-    </>
+      <Box>
+        {status == "success" && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+              gap: "60px",
+              padding: "30px",
+            }}
+          >
+            {data.results.map((person: any) => (
+              <CardView
+                status={person.status}
+                image={person.image}
+                name={person.name}
+                key={person.id}
+                gender={person.gender}
+                location={person.location.name}
+                species={person.species}
+              />
+            ))}
+          </Box>
+        )}
+      </Box>
+    </Box>
   );
 };
