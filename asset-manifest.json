@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ICFLIX/static/css/main.073c9b0a.css",
-    "main.js": "/ICFLIX/static/js/main.e9924bdb.js",
+    "main.js": "/ICFLIX/static/js/main.a17026df.js",
     "static/js/787.28cb0dcd.chunk.js": "/ICFLIX/static/js/787.28cb0dcd.chunk.js",
     "index.html": "/ICFLIX/index.html",
     "main.073c9b0a.css.map": "/ICFLIX/static/css/main.073c9b0a.css.map",
-    "main.e9924bdb.js.map": "/ICFLIX/static/js/main.e9924bdb.js.map",
+    "main.a17026df.js.map": "/ICFLIX/static/js/main.a17026df.js.map",
     "787.28cb0dcd.chunk.js.map": "/ICFLIX/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.e9924bdb.js"
+    "static/js/main.a17026df.js"
   ]
 }
