@@ -1,5 +1,12 @@
 import react, { useState } from "react";
-import { Box, Container, MenuItem, TextField } from "@mui/material";
+import {
+  Box,
+  Container,
+  MenuItem,
+  Pagination,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { fetchListMovies } from "../../Client/ApiRickAndMorty";
 import { useQuery } from "react-query";
 import CardView from "../../Components/CardView/CardView";
@@ -51,9 +58,13 @@ export const Characters = () => {
     setSelectValueSearch(event.target.value);
   };
 
+  const handlerPagination = (event: any,pageIndex:number) =>{
+    alert(pageIndex)
+  }
+
   return (
-    <Box sx={{marginTop:"40px"}}>
-      <Box sx={{display:"flex", justifyContent:"center", gap:"20px"}}>
+    <Box sx={{ marginTop: "40px" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         {selectedValue == "Nome" && (
           <TextField size={"small"} placeholder={"Nome"}></TextField>
         )}
@@ -88,7 +99,6 @@ export const Characters = () => {
           ))}
         </TextField>
       </Box>
-
       <Box>
         {status == "success" && (
           <Box
@@ -115,6 +125,9 @@ export const Characters = () => {
           </Box>
         )}
       </Box>
+      <Stack spacing={2}>
+        <Pagination  onChange={handlerPagination} count={data?.info?.pages || 0} color="primary" />
+      </Stack>
     </Box>
   );
 };
