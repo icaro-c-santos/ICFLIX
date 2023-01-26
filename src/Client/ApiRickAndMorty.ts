@@ -11,7 +11,6 @@ export const fetchListMovies = async () => {
   return data;
 };
 
-
 export const fetchListMoviesBy = async () => {
   const { data } = await axiosInstance.get("/character");
 

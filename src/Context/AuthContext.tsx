@@ -19,14 +19,6 @@ export const AuthContext = createContext<TAuthContext>({} as TAuthContext);
 export const AuthProvider = (props: { children: any }) => {
   const [userLogged, setUserLogged] = useState<TAuthData>({});
 
-  useEffect(() => {
-    const data = localStorage.getItem("userLogged");
-    if (data) {
-      const user: TAuthData = JSON.parse(data);
-      user.isLoggedIn && setUserLogged(user);
-    } 
-  }, []);
-
   return (
     <AuthContext.Provider value={{ userLogged, setUserLogged } as TAuthContext}>
       {props.children}
