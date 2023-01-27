@@ -9,6 +9,7 @@ import { AuthProvider } from "../Context/AuthContext";
 import { Login } from "../pages/Login/Login";
 import ResponsiveAppBar from "../Components/NaveBar/NaveBar";
 import { Register } from "../pages/Register/Register";
+import { Footer } from "../Components/Footer/Footer";
 
 const Routers = () => {
   return (
@@ -32,6 +33,7 @@ const Routers = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
+      <Footer />
     </AuthProvider>
   );
 };
