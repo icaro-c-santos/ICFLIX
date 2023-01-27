@@ -33,7 +33,7 @@ const Routers = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
-      <Footer />
+      <Footer  />
     </AuthProvider>
   );
 };

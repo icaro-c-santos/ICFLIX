@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import {useEffect} from "react"
+import Box from "@mui/material/Box";
 export const Contact = () => {
   
   return (
-    <>
-      <h1>CONTACT </h1>
-      <Link to="/">retornar a página inicial</Link>
-    </>
+    <Box sx={{display:"flex", justifyContent:"center"}} >
+      
+    </Box>
   );
 };
