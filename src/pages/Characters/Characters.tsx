@@ -18,10 +18,8 @@ type TypeOptionsSelected = {
 };
 
 export const Characters = () => {
-  const { data, status, isError, isLoading } = useQuery(
-    "movie",
-    fetchListMovies
-  );
+  const [pageIndex, setPageIndex] = useState(1);
+  const { data, status, isError, isLoading } = useQuery(["character",pageIndex],() => fetchListMovies(pageIndex));
 
   const options = ["Nome", "Gênero", "Status"];
 
@@ -58,9 +56,10 @@ export const Characters = () => {
     setSelectValueSearch(event.target.value);
   };
 
-  const handlerPagination = (event: any,pageIndex:number) =>{
-    alert(pageIndex)
-  }
+  const handlerPagination = (event: any, pageIndex: number) => {
+    setPageIndex(pageIndex)
+  };
+
 
   return (
     <Box sx={{ marginTop: "40px" }}>
@@ -125,9 +124,14 @@ export const Characters = () => {
           </Box>
         )}
       </Box>
-      <Stack spacing={2}>
-        <Pagination  onChange={handlerPagination} count={data?.info?.pages || 0} color="primary" />
-      </Stack>
+     
+        <Pagination 
+          sx={{justifyContent:"center" ,display:"flex", margin:"40px"}}
+          onChange={handlerPagination}
+          count={data?.info?.pages || 0}
+          color="primary"
+        />
+  
     </Box>
   );
 };

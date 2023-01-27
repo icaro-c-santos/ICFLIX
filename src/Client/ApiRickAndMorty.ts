@@ -4,10 +4,8 @@ const axiosInstance = axios.create({
   baseURL: "https://rickandmortyapi.com/api/",
 });
 
-export const fetchListMovies = async () => {
-  const { data } = await axiosInstance.get("/character?page=1");
-
-  console.log(data)
+export const fetchListMovies = async (pagIndex:number) => {
+  const { data } = await axiosInstance.get(`/character?page=${pagIndex}`);
   return data;
 };
 
