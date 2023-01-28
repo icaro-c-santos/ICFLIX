@@ -4,5 +4,11 @@ import { Box } from "@mui/material"
 
 export const Footer = () =>{
 
-    return <Box sx={{height:"150px", backgroundColor:"black"}}> </Box>
+    return <Box sx={{
+        width: "100%",
+        height: "100px",
+        position: "absolute",
+        bottom: "auto",
+        left: "0",
+        backgroundColor:"black"}}> </Box>
 }

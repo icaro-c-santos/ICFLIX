@@ -26,7 +26,7 @@ export const Contact = () => {
     <Box
       sx={{
         display: "flex",
-        height: "500px",
+        minHeight:"584.5px",
         alignItems: "center",
         justifyContent: "center",
       }}

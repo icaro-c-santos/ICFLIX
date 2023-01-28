@@ -1,16 +1,17 @@
 import { Container, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 
 export const About = () => {
   return (
-    <>
-      <Container
+    <Box sx={{minHeight:"484.5px"}}>
+    <Container
         maxWidth="md"
         sx={{
           bgcolor: "#bfa38d",
           borderRadius: "25px",
           textAlign: "justify",
-          marginTop:"100px"
+          marginTop:"100px",
         }}
       >
         <Typography sx={{ fontSize: "25px", padding: "30px 40px", }}>
@@ -28,6 +29,6 @@ export const About = () => {
           </span>
         </Typography>
       </Container>
-    </>
+    </Box>
   );
 };

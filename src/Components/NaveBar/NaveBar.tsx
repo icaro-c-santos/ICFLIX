@@ -40,7 +40,6 @@ export const ResponsiveAppBar = () => {
   const [settings, setSettings] = React.useState<setting[]>([]);
 
   React.useEffect(() => {
-
     const setting = userLogged.isLoggedIn
       ? [
           {
@@ -124,7 +123,6 @@ export const ResponsiveAppBar = () => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
             onClick={() => {
               navigate(`/`);
             }}
@@ -136,6 +134,9 @@ export const ResponsiveAppBar = () => {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              "&:hover": {
+                cursor: "pointer",
+              },
             }}
           >
             ICFLIX
