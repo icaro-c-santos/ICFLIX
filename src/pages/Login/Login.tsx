@@ -71,7 +71,7 @@ export const Login = () => {
   };
 
   return (
-    <>
+    <Box minHeight={"534.5px"}>
       <AlertDialog
         message={messageAlert}
         openModal={openModal}
@@ -132,6 +132,6 @@ export const Login = () => {
           </Button>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };

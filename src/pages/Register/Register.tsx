@@ -8,7 +8,7 @@ import {
   validatorPassword,
 } from "../../utils/validator";
 import { Fragment } from "react";
-import clientAuth, { bancoFake,  } from "../../Client/User";
+import clientAuth from "../../Client/User";
 import ModalSucess from "../../Components/ModalSucess/ModalSucess";
 import ModalError from "../../Components/ModalError/ModalError";
 
@@ -128,7 +128,7 @@ export const Register = () => {
   };
 
   return (
-    <>
+    <Box minHeight={"534.5px"}>
       <ModalSucess
         message={messageSucess}
         openModal={openModalSucess}
@@ -208,6 +208,6 @@ export const Register = () => {
           </Button>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
