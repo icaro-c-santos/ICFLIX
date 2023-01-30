@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useState, useEffect } from "react";
 import {
   Box,
   Container,
@@ -7,7 +7,11 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { fetchListMovies } from "../../Client/ApiRickAndMorty";
+
+import {
+  fetchListMovies,
+  fetchListMoviesBy,
+} from "../../Client/ApiRickAndMorty";
 import { useQuery } from "react-query";
 import CardView from "../../Components/CardView/CardView";
 import { width } from "@mui/system";
@@ -17,9 +21,21 @@ type TypeOptionsSelected = {
   options: string[];
 };
 
+export type typeDataFetch = {
+  pageIndex: number;
+  parameter: string | null;
+};
+
 export const Characters = () => {
-  const [pageIndex, setPageIndex] = useState(1);
-  const { data, status, isError, isLoading } = useQuery(["character",pageIndex],() => fetchListMovies(pageIndex));
+  const [dataFetch, setDataFetch] = useState<typeDataFetch>({
+    pageIndex: 1,
+    parameter: null,
+  });
+
+  const { data, status, isError, isLoading } = useQuery(
+    ["character", dataFetch.pageIndex, dataFetch.parameter],
+    () => fetchListMoviesBy(dataFetch)
+  );
 
   const options = ["Nome", "Gênero", "Status"];
 
@@ -56,16 +72,43 @@ export const Characters = () => {
     setSelectValueSearch(event.target.value);
   };
 
-  const handlerPagination = (event: any, pageIndex: number) => {
-    setPageIndex(pageIndex)
+  const hanlderValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectValueSearch(event.target.value);
   };
 
+  useEffect(() => {
+    selectedValue == "Status" &&
+      setDataFetch({
+        ...dataFetch,
+        parameter: "&status=" + selectValueSearch,
+      });
+
+    selectedValue == "Gênero" &&
+      setDataFetch({
+        ...dataFetch,
+        parameter: "&gender=" + selectValueSearch,
+      });
+      selectedValue == "Nome" && setDataFetch({
+      ...dataFetch,
+      parameter: "&name=" + selectValueSearch,
+    });
+    console.log(selectValueSearch);
+  }, [selectValueSearch]);
+
+  const handlerPagination = (event: any, pageIndex: number) => {
+    setDataFetch({ ...dataFetch, pageIndex: pageIndex });
+  };
 
   return (
-    <Box sx={{ marginTop: "40px" }}>
+    <Box sx={{ marginTop: "40px", minHeight: "584.5px" }}>
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         {selectedValue == "Nome" && (
-          <TextField size={"small"} placeholder={"Nome"}></TextField>
+          <TextField
+            size={"small"}
+            placeholder={"Nome"}
+            onChange={hanlderValue}
+            value={selectValueSearch}
+          ></TextField>
         )}
         {optionsSearch && (
           <TextField
@@ -124,14 +167,13 @@ export const Characters = () => {
           </Box>
         )}
       </Box>
-     
-        <Pagination 
-          sx={{justifyContent:"center" ,display:"flex", margin:"40px"}}
-          onChange={handlerPagination}
-          count={data?.info?.pages || 0}
-          color="primary"
-        />
-  
+
+      <Pagination
+        sx={{ justifyContent: "center", display: "flex", margin: "40px" }}
+        onChange={handlerPagination}
+        count={data?.info?.pages || 0}
+        color="primary"
+      />
     </Box>
   );
 };
