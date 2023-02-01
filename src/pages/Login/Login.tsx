@@ -5,6 +5,8 @@ import { useState } from "react";
 import clientAuth from "../../Client/User";
 import { useNavigate } from "react-router";
 import AlertDialog from "../../Components/ModalError/ModalError";
+import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import ButtonBase from "@mui/material/ButtonBase";
 
 export const Login = () => {
   const { userLogged, setUserLogged } = useContext(AuthContext);
@@ -15,6 +17,19 @@ export const Login = () => {
   const [messageAlert, setMessageAlert] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
+
+  const loginGoogle = useGoogleLogin({
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
+  });
+
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      console.log(credentialResponse);
+    },
+    onError: () => {
+      console.log("Login Failed");
+    },
+  });
 
   useEffect(() => {
     login.length <= 0 && setIsValidLogin(true);
@@ -131,7 +146,18 @@ export const Login = () => {
             Entrar
           </Button>
         </Box>
+        <Button
+        onClick={() => {
+          loginGoogle();
+        }}
+        variant="outlined"
+        sx={{ padding: "10px",minWidth:"300px",margin:"auto", borderRadius: "10px", width: "180px",bgcolor:"blue",color:"white" }}
+      >
+        {" "}
+        Faça login com o Google 🚀
+      </Button>
       </Box>
+      
     </Box>
   );
 };

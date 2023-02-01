@@ -28,6 +28,7 @@ export const AuthProvider = (props: { children: any }) => {
   });
 
   return (
+  
     <AuthContext.Provider value={{ userLogged, setUserLogged } as TAuthContext}>
       {props.children}
     </AuthContext.Provider>

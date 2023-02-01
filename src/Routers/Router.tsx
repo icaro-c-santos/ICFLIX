@@ -11,7 +11,10 @@ import ResponsiveAppBar from "../Components/NaveBar/NaveBar";
 import { Register } from "../pages/Register/Register";
 import { Footer } from "../Components/Footer/Footer";
 
+
 const Routers = () => {
+ 
+
   return (
     <AuthProvider>
       <Router>
@@ -33,7 +36,7 @@ const Routers = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
-      <Footer  />
+      <Footer />
     </AuthProvider>
   );
 };
