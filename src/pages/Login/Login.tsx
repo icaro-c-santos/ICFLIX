@@ -146,16 +146,7 @@ export const Login = () => {
             Entrar
           </Button>
         </Box>
-        <Button
-        onClick={() => {
-          loginGoogle();
-        }}
-        variant="outlined"
-        sx={{ padding: "10px",minWidth:"300px",margin:"auto", borderRadius: "10px", width: "180px",bgcolor:"blue",color:"white" }}
-      >
-        {" "}
-        Faça login com o Google 🚀
-      </Button>
+        
       </Box>
       
     </Box>
