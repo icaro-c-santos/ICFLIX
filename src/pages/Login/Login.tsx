@@ -19,17 +19,23 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const loginGoogle = useGoogleLogin({
-    onSuccess: (tokenResponse) => console.log(tokenResponse),
+    scope:"profile",
+    onSuccess: (tokenResponse) => {
+      fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=`+tokenResponse.access_token).then(data => data.json()).then(data =>{
+      const user = {
+        ...userLogged,
+        avatarUrl:data.picture,
+        name:data.given_name,
+        isLoggedIn:true
+      };
+      setUserLogged(user)
+      localStorage.setItem("userLogged", JSON.stringify(user));
+      navigate("/");
+      });
+    },
   });
 
-  useGoogleOneTapLogin({
-    onSuccess: (credentialResponse) => {
-      console.log(credentialResponse);
-    },
-    onError: () => {
-      console.log("Login Failed");
-    },
-  });
+ 
 
   useEffect(() => {
     login.length <= 0 && setIsValidLogin(true);
@@ -146,7 +152,16 @@ export const Login = () => {
             Entrar
           </Button>
         </Box>
-        
+        <Button
+        onClick={() => {
+          loginGoogle();
+        }}
+        variant="outlined"
+        sx={{ padding: "10px",minWidth:"300px",margin:"auto", borderRadius: "10px", width: "180px",bgcolor:"blue",color:"white" }}
+      >
+        {" "}
+        Faça login com o Google 🚀
+      </Button>
       </Box>
       
     </Box>
