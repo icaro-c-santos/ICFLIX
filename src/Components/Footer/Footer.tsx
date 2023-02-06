@@ -12,7 +12,10 @@ export const Footer = () =>{
         left: "0",
         color:"white",
         backgroundColor:"black",
-        display:"flex"
+        display:"flex",
+        "&:hover": {
+          cursor: "pointer",
+        }
         }}>
             
            <Typography sx={{fontSize:"32px",margin:"auto"}}>Create by Icaro C. Santos</Typography>
