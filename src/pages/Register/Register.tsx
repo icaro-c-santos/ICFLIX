@@ -167,7 +167,7 @@ export const Register = () => {
             value={login}
             error={errorTextLogin.length > 0}
             helperText={errorTextLogin.map((error) => (
-              <Fragment key={Math.random()}>{error}</Fragment>
+              <Fragment key={errorTextLogin.indexOf(error)}>{error}</Fragment>
             ))}
           ></TextField>
           <TextField
@@ -186,7 +186,7 @@ export const Register = () => {
             type={"password"}
             error={errorTextPassword.length > 0}
             helperText={errorTextPassword.map((error) => (
-              <Fragment key={Math.random()}>{error}</Fragment>
+              <Fragment key={errorTextLogin.indexOf(error)}>{error}</Fragment>
             ))}
           ></TextField>
           <TextField
