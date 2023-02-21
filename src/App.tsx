@@ -5,6 +5,18 @@ import Routers from "./Routers/Router";
 import { AuthProvider } from "./Context/AuthContext";
 import { Home } from "./pages/Home/Home";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import TagManager from 'react-gtm-module';
+
+const TagManagerArgs = {
+  gtmId:"UA-213515478-2",
+  dataLayer:{
+    userId:"11",
+    userProject:"ICFLIX"
+  }
+}
+
+TagManager.initialize(TagManagerArgs);
+
 function App() {
   return (
     <>
