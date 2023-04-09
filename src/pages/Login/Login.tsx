@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import AlertDialog from "../../Components/ModalError/ModalError";
 import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import ButtonBase from "@mui/material/ButtonBase";
-
+import IconGoogle from "../../imgs/icon-google.svg";
 export const Login = () => {
   const { userLogged, setUserLogged } = useContext(AuthContext);
   const [isValidLogin, setIsValidLogin] = useState(false);
@@ -17,25 +17,28 @@ export const Login = () => {
   const [messageAlert, setMessageAlert] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-
+  const [show, setShow] = useState(true);
   const loginGoogle = useGoogleLogin({
-    scope:"profile",
+    scope: "profile",
     onSuccess: (tokenResponse) => {
-      fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=`+tokenResponse.access_token).then(data => data.json()).then(data =>{
-      const user = {
-        ...userLogged,
-        avatarUrl:data.picture,
-        name:data.given_name,
-        isLoggedIn:true
-      };
-      setUserLogged(user)
-      localStorage.setItem("userLogged", JSON.stringify(user));
-      navigate("/");
-      });
+      fetch(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=` +
+          tokenResponse.access_token
+      )
+        .then((data) => data.json())
+        .then((data) => {
+          const user = {
+            ...userLogged,
+            avatarUrl: data.picture,
+            name: data.given_name,
+            isLoggedIn: true,
+          };
+          setUserLogged(user);
+          localStorage.setItem("userLogged", JSON.stringify(user));
+          navigate("/");
+        });
     },
   });
-
- 
 
   useEffect(() => {
     login.length <= 0 && setIsValidLogin(true);
@@ -153,17 +156,37 @@ export const Login = () => {
           </Button>
         </Box>
         <Button
-        onClick={() => {
-          loginGoogle();
-        }}
-        variant="outlined"
-        sx={{ padding: "10px",minWidth:"300px",margin:"auto", borderRadius: "10px", width: "180px",bgcolor:"blue",color:"white" }}
-      >
-        {" "}
-        Faça login com o Google 🚀
-      </Button>
+          onClick={() => {
+            loginGoogle();
+          }}
+          variant="outlined"
+          sx={{
+            padding: "10px",
+            minWidth: "300px",
+            margin: "auto",
+            borderRadius: "10px",
+            width: "180px",
+            bgcolor: "white",
+            color: "blue",
+            fontWeight:600
+          }}
+        >
+          {" "}
+          Faça login com o Google{" "}
+          {
+            <img
+              style={{ marginLeft: "15px" }}
+              width={"25px"}
+              src={IconGoogle}
+            ></img>
+          }
+        </Button>
       </Box>
-      
+      <Box sx={{ margin: "auto", textAlign: "center" }}>
+        {
+          "ATENÇÃO PARA TESTE USE O SEGUINTE USUÁRIO -> Usuario: user ,Senha: user"
+        }
+      </Box>
     </Box>
   );
 };

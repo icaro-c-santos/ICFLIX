@@ -12,9 +12,9 @@ interface user {
 export const bancoFake: typeUserData[] = [];
 
 bancoFake.push({
-  login: "icaro",
-  password: "12345",
-  name: "ICARO",
+  login: "user",
+  password: "user",
+  name: "User",
   avatarUrl:
     "https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375__340.png",
 });
